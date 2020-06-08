@@ -29,7 +29,7 @@ app.use(passport.initialize());
 // set passport to manage the session
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://mayhsundar:test1234@clustor0-9at9v.mongodb.net/userDB",{useUnifiedTopology: true,  useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/userDB",{useUnifiedTopology: true,  useNewUrlParser: true });
 mongoose.set("useCreateIndex", true); // for deprecation warning
 const userSchema = new mongoose.Schema({
     email: String,
@@ -58,6 +58,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new GoogleStrategy({
+    // use your client_ID and client_secret
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: "http://localhost:3000/auth/google/secrets"
@@ -108,7 +109,6 @@ app.get("/secrets", function(req, res){
             console.log(err);
         }else{
             if(foundUsers){
-                console.log("mil gye");
                 res.render("secrets", {usersWithSecrets: foundUsers, userLoggedIn: isLoggedIn});
             }else{
                 console.log("No user is there with any secret");
