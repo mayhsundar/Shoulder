@@ -29,7 +29,7 @@ app.use(passport.initialize());
 // set passport to manage the session
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/userDB",{useUnifiedTopology: true,  useNewUrlParser: true });
+mongoose.connect("mongodb+srv://mayhsundar:test1234@clustor0-9at9v.mongodb.net/userDB",{useUnifiedTopology: true,  useNewUrlParser: true });
 mongoose.set("useCreateIndex", true); // for deprecation warning
 const userSchema = new mongoose.Schema({
     email: String,
@@ -181,7 +181,8 @@ app.post("/login", function(req, res){
    });
 });
 
+const port = process.env.PORT;
 
-app.listen(3000, function(){
+app.listen(3000 || port, function(){
 console.log('App is runnning at port: 3000');
 });
